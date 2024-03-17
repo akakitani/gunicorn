@@ -1923,6 +1923,26 @@ class PostRequest(Setting):
         """
 
 
+class PreChildExit(Setting):
+    name = "pre_child_exit"
+    section = "Server Hooks"
+    validator = validate_callable(3)
+    type = callable
+
+    def pre_child_exit(server, worker, sig):
+        pass
+    default = staticmethod(pre_child_exit)
+    desc = """\
+        Called just before a worker is killed, in the master process.
+
+        The callable needs to accept three instance variables for the Arbiter,
+        the Worke about to be killed, and the signal.SIG* value sent 
+        to the Worker.
+
+        .. versionadded:: 19.7
+        """
+
+
 class ChildExit(Setting):
     name = "child_exit"
     section = "Server Hooks"

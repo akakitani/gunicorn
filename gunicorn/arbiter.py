@@ -659,6 +659,8 @@ class Arbiter(object):
         :attr sig: `signal.SIG*` value
          """
         try:
+            worker = self.WORKERS[pid]
+            self.cfg.pre_child_exit(self, worker, sig)
             os.kill(pid, sig)
         except OSError as e:
             if e.errno == errno.ESRCH:
